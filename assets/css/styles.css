@@ -1876,6 +1876,14 @@ button {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.011));
 }
 
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1970,6 +1978,20 @@ button {
   color: var(--turquoise);
   font-size: 11.5px;
   line-height: 1.5;
+}
+
+.form-status.is-success {
+  color: var(--turquoise);
+}
+
+.form-status.is-error {
+  color: #ff9a9a;
+}
+
+.btn:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
 }
 
 /* ---------- 16. Footer ---------- */

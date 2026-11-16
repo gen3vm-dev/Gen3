@@ -88,11 +88,25 @@
   var form = document.getElementById("contactForm");
   var status = form ? form.querySelector(".form-status") : null;
 
-  function setStatus(message) {
-    if (status) status.textContent = message;
+  function setStatus(message, type) {
+    if (!status) return;
+    status.textContent = message;
+    status.classList.remove("is-success", "is-error");
+    if (type) status.classList.add("is-" + type);
   }
 
   if (form) {
+    var endpoint = form.getAttribute("data-endpoint") || "https://formsubmit.co/ajax/" + CONTACT_EMAIL;
+    var submitButton = form.querySelector('button[type="submit"]');
+    var submitLabel = submitButton ? submitButton.querySelector(".btn-label") : null;
+    var defaultLabel = submitLabel ? submitLabel.textContent : "Enviar consulta";
+
+    function setLoading(loading) {
+      if (!submitButton) return;
+      submitButton.disabled = loading;
+      if (submitLabel) submitLabel.textContent = loading ? "Enviando…" : defaultLabel;
+    }
+
     form.addEventListener("submit", function (event) {
       event.preventDefault();
 
@@ -102,32 +116,89 @@
       var empresa = String(data.get("empresa") || "").trim();
       var servicio = String(data.get("servicio") || "").trim();
       var mensaje = String(data.get("mensaje") || "").trim();
+      var honey = String(data.get("_honey") || "").trim();
+
+      setStatus("", "");
+
+      if (honey) {
+        setStatus("No pudimos enviar la consulta. Escribinos directo a " + CONTACT_EMAIL + ".", "error");
+        return;
+      }
 
       if (!nombre || !email || !mensaje) {
-        setStatus("Completá nombre, email y mensaje para poder responderte.");
+        setStatus("Completá nombre, email y mensaje para poder responderte.", "error");
+        var missing = !nombre ? "nombre" : !email ? "email" : "mensaje";
+        var missingField = document.getElementById(missing);
+        if (missingField) missingField.focus();
         return;
       }
 
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        setStatus("Revisá el email: parece que falta algo.");
+        setStatus("Revisá el email: parece que falta algo.", "error");
+        var emailField = document.getElementById("email");
+        if (emailField) emailField.focus();
         return;
       }
 
-      var subject = "Consulta GEN 3 — " + (servicio || "Proyecto") + " — " + nombre;
-      var body = [
-        "Nombre: " + nombre,
-        "Email: " + email,
-        "Empresa: " + (empresa || "—"),
-        "Servicio: " + (servicio || "—"),
-        "",
-        mensaje
-      ].join("\n");
+      if (!window.fetch) {
+        form.submit();
+        return;
+      }
 
-      setStatus("Abriendo tu cliente de correo con la consulta lista…");
-      window.location.href =
-        "mailto:" + CONTACT_EMAIL +
-        "?subject=" + encodeURIComponent(subject) +
-        "&body=" + encodeURIComponent(body);
+      var payload = {
+        nombre: nombre,
+        email: email,
+        empresa: empresa || "—",
+        servicio: servicio || "—",
+        mensaje: mensaje,
+        _subject: "Nueva consulta GEN 3 — " + (servicio || "Proyecto") + " — " + nombre,
+        _template: "table",
+        _captcha: "false",
+        _honey: honey
+      };
+
+      setStatus("Enviando tu consulta…", "");
+      setLoading(true);
+
+      window
+        .fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(payload)
+        })
+        .then(function (response) {
+          return response
+            .json()
+            .catch(function () {
+              return {};
+            })
+            .then(function (json) {
+              return { ok: response.ok, json: json };
+            });
+        })
+        .then(function (result) {
+          var json = result.json || {};
+          var success = json.success === true || json.success === "true";
+          var message = String(json.message || "");
+
+          if (result.ok && success) {
+            setStatus("¡Gracias, " + nombre + "! Tu consulta se envió. Te respondemos a la brevedad.", "success");
+            form.reset();
+          } else if (/activat|confirm/i.test(message)) {
+            setStatus("El formulario se está activando. Mientras tanto, escribinos a " + CONTACT_EMAIL + ".", "error");
+          } else {
+            setStatus("No pudimos enviar la consulta. Escribinos directo a " + CONTACT_EMAIL + ".", "error");
+          }
+        })
+        .catch(function () {
+          setStatus("No pudimos enviar la consulta. Revisá tu conexión o escribinos a " + CONTACT_EMAIL + ".", "error");
+        })
+        .then(function () {
+          setLoading(false);
+        });
     });
   }
 

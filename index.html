@@ -618,7 +618,14 @@
           <p class="contact-note"><span class="dot"></span> RESPONDEMOS EN MENOS DE 48 H HÁBILES.</p>
         </div>
 
-        <form class="contact-form" id="contactForm" novalidate data-reveal style="--delay: 80ms">
+        <form class="contact-form" id="contactForm" action="https://formsubmit.co/gen3vm@gmail.com" method="POST" data-endpoint="https://formsubmit.co/ajax/gen3vm@gmail.com" novalidate data-reveal style="--delay: 80ms">
+          <input type="hidden" name="_subject" value="Nueva consulta desde la web GEN 3">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <div class="hp-field" aria-hidden="true">
+            <label for="_honey">No completar</label>
+            <input id="_honey" name="_honey" type="text" tabindex="-1" autocomplete="off">
+          </div>
           <div class="form-row">
             <div class="field">
               <label for="nombre">Nombre</label>
@@ -651,8 +658,8 @@
             <label for="mensaje">Mensaje</label>
             <textarea id="mensaje" name="mensaje" placeholder="Ej.: pierdo horas respondiendo WhatsApp, quiero ordenar los pedidos y que se carguen en el CRM…" required></textarea>
           </div>
-          <button class="btn btn-primary" type="submit">Enviar consulta <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></button>
-          <p class="form-note">Al enviar se abre tu cliente de correo con el mensaje listo. Si preferís, escribinos directo a <a href="mailto:gen3vm@gmail.com">gen3vm@gmail.com</a>.</p>
+          <button class="btn btn-primary" type="submit"><span class="btn-label">Enviar consulta</span> <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></button>
+          <p class="form-note">Tu consulta se envía directo a nuestro correo. No se abre ninguna ventana. Si algo falla, escribinos a <a href="mailto:gen3vm@gmail.com">gen3vm@gmail.com</a>.</p>
           <p class="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>

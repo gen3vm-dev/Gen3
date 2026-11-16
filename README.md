@@ -40,10 +40,10 @@ El sitio usa:
 
 Para cambiarlo:
 
-1. En `index.html`, reemplazar `gen3vm@gmail.com` por el email nuevo.
+1. En `index.html`, reemplazar `gen3vm@gmail.com` por el email nuevo. Está en los links visibles, en el `action` del formulario y en `data-endpoint`.
 2. En `assets/js/main.js`, cambiar `CONTACT_EMAIL` y, si corresponde, `WHATSAPP_NUMBER` (formato `5493531234567`, sin `+` ni espacios).
 
-El formulario no usa backend: arma un `mailto:` con los datos y abre el cliente de correo del visitante.
+El formulario se envía con **FormSubmit** (`https://formsubmit.co`) y llega directo a `gen3vm@gmail.com`, sin abrir el cliente de correo. La primera vez, FormSubmit manda un mail de activación a esa casilla: hay que abrirlo y confirmar el formulario una sola vez. El `action` del HTML queda como fallback para cuando JavaScript está desactivado.
 
 ## Publicación
 
