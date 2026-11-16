@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gen3vm-dev.github.io/Gen3/sitemap.xml
