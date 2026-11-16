@@ -33,14 +33,14 @@ Luego abrir `http://localhost:8000`.
 
 ## Editar el contacto
 
-Hoy el sitio usa como placeholder:
+El sitio usa:
 
-- Email: `hola@gen3vm.dev`
-- WhatsApp: vacío (el link se oculta)
+- Email: `gen3vm@gmail.com`
+- WhatsApp: vacío (el link se oculta hasta configurarlo)
 
 Para cambiarlo:
 
-1. En `index.html`, reemplazar `hola@gen3vm.dev` por el email real.
+1. En `index.html`, reemplazar `gen3vm@gmail.com` por el email nuevo.
 2. En `assets/js/main.js`, cambiar `CONTACT_EMAIL` y, si corresponde, `WHATSAPP_NUMBER` (formato `5493531234567`, sin `+` ni espacios).
 
 El formulario no usa backend: arma un `mailto:` con los datos y abre el cliente de correo del visitante.

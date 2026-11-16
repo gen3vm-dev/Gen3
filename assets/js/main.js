@@ -6,8 +6,7 @@
   "use strict";
 
   /* ---------- Configuración de contacto ---------- */
-  // Reemplazar por los datos reales cuando estén definidos.
-  var CONTACT_EMAIL = "hola@gen3vm.dev";
+  var CONTACT_EMAIL = "gen3vm@gmail.com";
   var WHATSAPP_NUMBER = ""; // Ej.: "5493531234567" (sin +, sin espacios)
 
   /* ---------- Año del footer ---------- */
@@ -67,7 +66,7 @@
   /* ---------- Links de contacto ---------- */
   document.querySelectorAll('a[href^="mailto:"]').forEach(function (link) {
     var href = link.getAttribute("href") || "";
-    if (href.indexOf("hola@gen3vm.dev") !== -1) {
+    if (href.indexOf("gen3vm@gmail.com") !== -1) {
       link.setAttribute("href", "mailto:" + CONTACT_EMAIL);
     }
   });
