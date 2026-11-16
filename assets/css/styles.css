@@ -216,10 +216,11 @@ button {
 .brand-type small {
   display: block;
   margin-top: 5px;
-  color: var(--muted-2);
+  color: var(--turquoise);
   font-family: var(--font-mono);
   font-size: 7px;
   letter-spacing: 0.2em;
+  text-shadow: 0 0 12px rgba(46, 230, 200, 0.28);
 }
 
 .nav {
